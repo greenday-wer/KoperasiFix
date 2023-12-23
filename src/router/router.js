@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import axios from 'axios';
+
 import Dashboard from '../components/Dashboard.vue';
 import Homepanel from '../components/Homepanel.vue';
-import Jenistransaksi from '../components/jenistransaksi.vue';
+import Jenistransaksi from '../components/Jenistransaksi.vue';
 import Tabungan from '../components/Tabungan.vue';
 import Nasabah from '../components/Nasabah.vue';
 import Agama from '../components/Agama.vue';
