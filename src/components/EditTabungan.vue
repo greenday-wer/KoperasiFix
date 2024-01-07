@@ -78,7 +78,7 @@ export default {
     loadTabungan() {
       const tabunganId = this.$route.params['id'];
 
-      axios.get(`http://127.0.0.1:8000/api/tabungan/${tabunganId}`, {
+      axios.get(`https://api-group1-prognet.manpits.xyz/api/tabungan/${tabunganId}`, {
         headers: {
           Authorization: `Bearer ${this.token}`,
         },
@@ -88,7 +88,7 @@ export default {
     },
 
     loadAllNasabah() {
-      axios.get('http://127.0.0.1:8000/api/nasabah', {
+      axios.get('https://api-group1-prognet.manpits.xyz/api/nasabah', {
         headers: {
           Authorization: `Bearer ${this.token}`,
         },
@@ -97,7 +97,7 @@ export default {
       });
     },
     loadJenisTransaksi() {
-      axios.get('http://127.0.0.1:8000/api/jenistransaksi', {
+      axios.get('https://api-group1-prognet.manpits.xyz/api/jenistransaksi', {
         headers: {
           Authorization: `Bearer ${this.token}`,
         },
@@ -114,7 +114,7 @@ export default {
       this.token = localStorage.getItem('token');
     },
     simpan() {
-      axios.put(`http://127.0.0.1:8000/api/tabungan/${this.tabungan.id}`, this.tabungan, {
+      axios.put(`https://api-group1-prognet.manpits.xyz/api/tabungan/${this.tabungan.id}`, this.tabungan, {
         headers: {
           Authorization: `Bearer ${this.token}`,
         },
