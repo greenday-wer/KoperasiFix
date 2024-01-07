@@ -84,7 +84,7 @@ export default {
   },
   methods: {
     loginUser() {
-      axios.post('http://127.0.0.1:8000/api/login', this.login).then(({ data }) => {
+      axios.post('https://api-group1-prognet.manpits.xyz/api/login', this.login).then(({ data }) => {
         if (data.success) {
             alert(data.message);
 
