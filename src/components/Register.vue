@@ -75,7 +75,7 @@ export default {
   },
   methods: {
     registerUser() {
-      const url = 'http://127.0.0.1:8000/api/register';
+      const url = 'https://api-group1-prognet.manpits.xyz/api/register';
       axios.post(url, this.user).then(({ data }) => {
         if (data.success) {
           alert(data.message);
