@@ -42,33 +42,33 @@
     },
     methods: {
       loadAllJenisTransaksis() {
-        var url = 'http://127.0.0.1:8000/api/jenistransaksi';
+        var url = 'https://api-group1-prognet.manpits.xyz/api/jenistransaksi';
         axios.get(url).then(({ data }) => {
           this.allJenisTransaksis = data;
         });
       },
       removeJenisTransaksi(jenisTransaksi) {
-        var url = `http://127.0.0.1:8000/api/jenistransaksi/${jenisTransaksi.id}`;
+        var url = `https://api-group1-prognet.manpits.xyz/api/jenistransaksi/${jenisTransaksi.id}`;
         axios.delete(url).then(() => {
           this.loadAllJenisTransaksis();
         });
       },
       editJenisTransaksi(jenisTransaksi) {
-        var url = `http://127.0.0.1:8000/api/jenistransaksi/${jenisTransaksi.id}`;
+        var url = `https://api-group1-prognet.manpits.xyz/api/jenistransaksi/${jenisTransaksi.id}`;
         axios.get(url).then(({ data }) => {
           this.jenisTransaksi = data;
         });
       },
       simpanJenisTransaksi() {
         if (this.jenisTransaksi.id === '') {
-          var url = 'http://127.0.0.1:8000/api/jenistransaksi';
+          var url = 'https://api-group1-prognet.manpits.xyz/api/jenistransaksi';
           axios.post(url, this.jenisTransaksi).then(() => {
             this.loadAllJenisTransaksis();
             this.clearJenisTransaksi();
             this.pesanSimpan = 'Data berhasil disimpan!';
           });
         } else {
-          var url = `http://127.0.0.1:8000/api/jenistransaksi/${this.jenisTransaksi.id}`;
+          var url = `https://api-group1-prognet.manpits.xyz/api/jenistransaksi/${this.jenisTransaksi.id}`;
           axios.put(url, this.jenisTransaksi).then(() => {
             this.loadAllJenisTransaksis();
             this.clearJenisTransaksi();
