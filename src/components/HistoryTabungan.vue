@@ -57,7 +57,7 @@ export default {
     loadHistoriTransaksi() {
       const nasabahNama = this.$route.params.nasabahNama;
 
-      axios.get(`http://127.0.0.1:8000/api/tabungan?nasabah_id=${nasabahNama}`, {
+      axios.get(`https://api-group1-prognet.manpits.xyz/api/tabungan?nasabah_id=${nasabahNama}`, {
         headers: {
           Authorization: `Bearer ${this.token}`,
         },
