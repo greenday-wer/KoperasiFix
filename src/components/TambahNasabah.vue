@@ -74,24 +74,24 @@ export default {
   },
   methods: {
     loadAllNasabah() {
-      axios.get('http://127.0.0.1:8000/api/nasabah').then(({ data }) => {
+      axios.get('https://api-group1-prognet.manpits.xyz/api/nasabah').then(({ data }) => {
         this.allNasabah = data;
       });
     },
     loadAgamas() {
-      axios.get('http://127.0.0.1:8000/api/agama').then(({ data }) => {
+      axios.get('https://api-group1-prognet.manpits.xyz/api/agama').then(({ data }) => {
         this.agamas = data;
       });
     },
     simpan() {
       if (this.nasabah.id === '') {
-        axios.post('http://127.0.0.1:8000/api/nasabah', this.nasabah).then(() => {
+        axios.post('https://api-group1-prognet.manpits.xyz/api/nasabah', this.nasabah).then(() => {
           this.loadAllNasabah();
           this.clear();
           this.pesanSimpan = 'Data berhasil disimpan!';
         });
       } else {
-        axios.put(`http://127.0.0.1:8000/api/nasabah/${this.nasabah.id}`, this.nasabah).then(() => {
+        axios.put(`https://api-group1-prognet.manpits.xyz/api/nasabah/${this.nasabah.id}`, this.nasabah).then(() => {
           this.loadAllNasabah();
           this.clear();
         });
@@ -107,12 +107,12 @@ export default {
       this.nasabah.agama_id = '';
     },
     edit(nasabah) {
-      axios.get(`http://127.0.0.1:8000/api/nasabah/${nasabah.id}`).then(({ data }) => {
+      axios.get(`https://api-group1-prognet.manpits.xyz/api/nasabah/${nasabah.id}`).then(({ data }) => {
         this.nasabah = data;
       });
     },
     remove(nasabah) {
-      axios.delete(`http://127.0.0.1:8000/api/nasabah/${nasabah.id}`).then(() => {
+      axios.delete(`https://api-group1-prognet.manpits.xyz/api/nasabah/${nasabah.id}`).then(() => {
         this.loadAllNasabah();
       });
     },
