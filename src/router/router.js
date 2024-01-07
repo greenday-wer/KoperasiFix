@@ -9,6 +9,15 @@ import Agama from '../components/Agama.vue';
 import Register from '../components/Register.vue';
 import Login from '../components/Login.vue';
 import Landing from '../components/Landing.vue';
+import TambahNasabah from '../components/TambahNasabah.vue';
+import TambahAgama from '../components/TambahAgama.vue';
+import TambahJenisTransaksi from '../components/TambahJenisTransaksi.vue';
+import TambahTabungan from '../components/TambahTabungan.vue';
+import EditTabungan from '../components/EditTabungan.vue';
+import EditJenisTransaksi from '../components/EditJenisTransaksi.vue';
+import EditNasabah from '../components/EditNasabah.vue';
+import HistoryTabungan from '../components/HistoryTabungan.vue';
+
 
 const routes = [
     {
@@ -56,6 +65,46 @@ const routes = [
                 path: '/agama',
                 name: 'Agama',
                 component: Agama,
+            },
+            {
+              path: '/tambahnasabah',
+              name: 'TambahNasabah',
+              component: TambahNasabah,
+            },
+            {
+              path: '/tambahagama',
+              name: 'TambahAgama',
+              component: TambahAgama,
+            },
+            {
+              path: '/tambahjenistransaksi',
+              name: 'TambahJenisTransaksi',
+              component: TambahJenisTransaksi,
+            },
+            {
+              path: '/tambahtabungan',
+              name: 'TambahTabungan',
+              component: TambahTabungan,
+            },
+            {
+              path: '/edittabungan/:id',
+              name: 'EditTabungan',
+              component: EditTabungan,
+            },
+            {
+              path: '/editjenistransaksi/:id',
+              name: 'EditJenisTransaksi',
+              component: EditJenisTransaksi,
+            },
+            {
+              path: '/editnasabah/:id',
+              name: 'EditNasabah',
+              component: EditNasabah,
+            },
+            {
+              path: '/historytabungan/:nasabahNama',
+              name: 'HistoryTabungan',
+              component: HistoryTabungan,
             },
         ],
     },

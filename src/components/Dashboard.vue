@@ -1,30 +1,27 @@
 <template>
-   <div>
+  <div>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-danger shadow">
       <div class="container-fluid">
-        <a href="#" class="navbar-brand">
-          <img src="../assets/images/logo.png" height="30" alt="CoolBrand">
-          | KPS
-        </a>
-        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <button @click="toggleSidebar" type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <div class="navbar-nav ms-auto">
-            <!-- Navbar items go here -->
-          </div>
-        </div>
+        <a href="#" class="navbar-brand">
+          <img src="../assets/images/logo.png" height="30" alt="CoolBrand">
+          KOPERASI | KSP
+        </a>
+        
       </div>
     </nav>
 
     <!-- Dashboard -->
     <div class="dashboard">
       <!-- Sidebar -->
-      <aside class="sidebar">
+      <aside class="sidebar" :class="{ 'collapsed': isSidebarCollapsed }">
         <header>
-          <h1 style="font-family: 'Montserrat', cursive;">KOPERASI</h1>
+          <h1 class="judul">Menu</h1>
         </header>
+        <hr>
         <nav class="navigation-links">
           <router-link to="/homepanel" class="router-link">
             <i class="fas fa-home"></i> Home
@@ -41,10 +38,10 @@
           <router-link to="/agama" class="router-link">
             <i class="fas fa-praying-hands"></i> Agama
           </router-link>
+          <span @click="logout" class="router-link logout-button">
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </span>
         </nav>
-        <span @click="logout" class="router-link logout-button">
-          <i class="fas fa-sign-out-alt"></i> Logout
-        </span>
       </aside>
 
       <!-- Content -->
@@ -57,112 +54,128 @@
 
 <script>
 import '@fortawesome/fontawesome-free/css/all.css';
+
 export default {
   name: 'Dashboard',
+  data() {
+    return {
+      isSidebarCollapsed: false,
+    };
+  },
   methods: {
+    toggleSidebar() {
+      this.isSidebarCollapsed = !this.isSidebarCollapsed;
+    },
     logout() {
       // Hapus token dari localStorage saat logout
       localStorage.removeItem('token');
       // Redirect ke halaman login setelah logout
       this.$router.push({ name: 'Landing' });
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-
-*,
-::after,
-::before {
-    box-sizing: border-box;
+/* Reset some default styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-
 
 body {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
 }
 
-h3 {
-    font-size: 1.2375rem;
-    color: #FFF;
+/* Navbar styles */
+.navbar {
+  background: linear-gradient(to right, #e74c3c, #c0392b);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  padding-bottom: 1%;
+  padding-top: 1%;
 }
 
-a {
-    cursor: pointer;
-    text-decoration: none;
-    font-family: 'Poppins', sans-serif;
+.navbar-brand {
+  font-weight: bold;
 }
 
-li {
-    list-style: none;
-}
-
-/* Layout skeleton */
-
+/* Dashboard layout */
 .dashboard {
   display: flex;
+  height: 100vh;
 }
 
+/* Sidebar styles */
 .sidebar {
-    width: 264px;
-    transition: none;
-    box-shadow: 0 0 35px 0 rgba(8, 15, 22, 0.5);
-    z-index: 1111;
-    background-color: #d04b4b; /* Sidebar background color */
-    color: #ffffff; /* Sidebar text color */
+  width: 264px;
+  height: auto;
+  background: linear-gradient(to right, #2c3e50, #273746);
+  color: #ffffff;
+  transition: margin-left 0.3s ease;
+  box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.3);
 }
 
 .sidebar.collapsed {
-    margin-left: -264px;
+  margin-left: -264px;
 }
 
-.header {
-    padding: 1.15rem 1.5rem;
+/* Sidebar header styles */
+.sidebar header {
+  padding: 20px;
+  text-align: center;
 }
 
-.header a {
-    color: #e9ecef;
-    font-size: 1.25rem;
-    font-weight: 600;
+.sidebar header h1 {
+  font-size: 1.5rem;
+  color: #ffffff;
 }
 
+/* Sidebar navigation styles */
 .navigation-links {
-    padding: 0;
-    margin-top: 20px;
+  padding-top: 20px;
+  padding-left: 20px;
 }
 
 .router-link {
-    text-decoration: none;
-    color: #e9ecef;
-    display: block;
-    padding: 10px 0;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
+  text-decoration: none;
+  color: #ffffff;
+  display: block;
+  padding: 10px 0;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
 }
 
 .router-link:hover {
-    background-color: #0056b3;
+  background-color: #3498db;
 }
 
+/* Logout button styles */
+.logout-button {
+  cursor: pointer;
+  padding: 10px 0;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #e74c3c;
+}
+
+/* Content styles */
 .content {
   flex: 1;
   padding: 20px;
-  max-width: 100vw;
-  width: 100vw;
 }
-/* Responsive */
 
-@media (min-width: 768px) {
-    .content {
-        width: auto;
-    }
-}
-.logout-button {
-  pointer-events: auto; /* Membuat button dapat diklik */
-  cursor: pointer; /* Menunjukkan kursor tangan saat di atas button */
+/* Responsive styles */
+@media (max-width: 767px) {
+  .sidebar {
+    margin-left: -264px;
+  }
+  .sidebar.collapsed {
+    margin-left: 0;
+  }
 }
 </style>
-

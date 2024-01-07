@@ -1,52 +1,36 @@
 <template>
+  
   <div class="container">
-    <h2>Data Nasabah</h2>
-    <form @submit.prevent="simpan()">
-      <!-- Form Input Nasabah -->
-      <div class="mb-3 form-group">
-        <label>Nama:</label>
-        <input type="text" class="form-control" v-model="nasabah.nama" required>
-      </div>
-      <div class="mb-3 form-group">
-        <label>Alamat:</label>
-        <input type="text" class="form-control" v-model="nasabah.alamat" required>
-      </div>
-      <div class="mb-3 form-group">
-        <label>Telepon:</label>
-        <input type="text" class="form-control" v-model="nasabah.telepon" required>
-      </div>
-      <div class="mb-3 form-group">
-        <label>Tanggal Lahir:</label>
-        <input type="date" class="form-control" v-model="nasabah.lahir" required>
-      </div>
-      <div class="mb-3 form-group">
-        <label>Gender:</label>
-        <select v-model="nasabah.gender" class="form-control" required>
-          <option value="Pria">Pria</option>
-          <option value="Wanita">Wanita</option>
-        </select>
-      </div>
+    <div class="blok-judul">
+    <h2 class="Judul">Data Nasabah</h2>
+    </div>
 
-      <!-- Form Input Agama -->
-      <div class="mb-3 form-group">
-      <label>Agama:</label>
-      <select v-model="nasabah.agama_id" class="form-control" required>
-        <option v-for="agama in agamas" :key="agama.id" :value="agama.id">{{ agama.agama }}</option>
-      </select>
-      </div> 
+    <hr>
+    <div class="blok">
+    <p>Pada bagian ini merupakan Data Khusus Nasabah yang dimana berisikan beberapa menu berupa : </p>
 
-
-      <div class="btn-group">
-        <button class="btn btn-primary" type="submit">Simpan</button>
-        <button class="btn btn-warning" type="button" @click="clear()">Clear</button>
-      </div>
-    </form>
-
-    <h2>Data Nasabah</h2>
+    <ul>Tambah Data Nasabah :
+    <li>Menambahkan informasi anggota baru ke dalam sistem.</li>
+     <li>Melengkapi data pribadi, informasi kontak, dan detail keanggotaan.</li>
+    </ul>
+     <ul>Edit Data Nasabah :
+    <li>Memperbarui informasi anggota yang telah terdaftar.</li>
+     <li>Mengubah data pribadi, informasi kontak, atau detail keanggotaan sesuai dengan perubahan yang diperlukan.</li>
+    </ul>
+      <ul>Hapus Data Nasabah :
+    <li>Menghapus data anggota yang tidak aktif atau tidak sesuai dengan kebijakan koperasi.</li>
+    </ul>
+    </div>
+    <!-- Add a search input -->
+    <div class="mb-3 form-group">
+      <label for="search">Cari Nama Nasabah:</label>
+      <input type="text" class="form-control" v-model="search" id="search" />
+    </div>
+    <router-link to="/tambahnasabah" class="btn btn-success">Tambah Data</router-link>
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>ID</th>
+          <th>No</th>
           <th>Nama</th>
           <th>Alamat</th>
           <th>Telepon</th>
@@ -57,7 +41,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(nasabah, index) in allNasabah" :key="nasabah.id">
+        <tr v-for="(nasabah, index) in filteredNasabah" :key="nasabah.id">
           <td>{{ nasabah.id }}</td>
           <td>{{ nasabah.nama }}</td>
           <td>{{ nasabah.alamat }}</td>
@@ -67,7 +51,7 @@
           <td>{{ nasabah.agama.agama }}</td>
           <td>
             <div class="btn-group">
-              <button type="button" class="btn btn-warning" @click="edit(nasabah)">Edit</button>
+              <router-link :to="{ name: 'EditNasabah', params: { id: nasabah.id } }" class="btn btn-warning">Edit</router-link>
               <button type="button" class="btn btn-danger" @click="remove(nasabah)">Delete</button>
             </div>
           </td>
@@ -94,8 +78,16 @@ export default {
         gender: '',
         agama_id: '',
       },
-      agamas: [], 
+      agamas: [],
+      search: '',
     };
+  },
+  computed: {
+    filteredNasabah() {
+      return this.allNasabah.filter(nasabah =>
+        nasabah.nama.toLowerCase().includes(this.search.toLowerCase())
+      );
+    },
   },
   created() {
     this.loadAllNasabah();
@@ -134,11 +126,6 @@ export default {
       this.nasabah.gender = '';
       this.nasabah.agama_id = '';
     },
-    edit(nasabah) {
-      axios.get(`http://127.0.0.1:8000/api/nasabah/${nasabah.id}`).then(({ data }) => {
-        this.nasabah = data;
-      });
-    },
     remove(nasabah) {
       axios.delete(`http://127.0.0.1:8000/api/nasabah/${nasabah.id}`).then(() => {
         this.loadAllNasabah();
@@ -155,8 +142,9 @@ export default {
   }
 
   h2 {
-    color: #007bff;
+    color: #000000;
     margin-bottom: 20px;
+    text-align: center;
   }
 
   form {
@@ -206,7 +194,7 @@ export default {
   }
 
   th {
-    background-color: #007bff;
+    background-color:#000000;
     color: white;
   }
 
@@ -219,4 +207,56 @@ export default {
   .btn-danger:hover {
     color: #fff;
   }
+
+.blok{
+    /* border: 2px solid #333;  */
+    padding: 10px; 
+    border-radius: 8px; 
+    background-color: #f8f8f8;
+}
+.blok-judul{
+    border: 2px solid #333; 
+    padding-top: 15px; 
+    border-radius: 8px; 
+    background-color: #f8f8f8;
+
+}
+
+.search-container {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.search-container input {
+  flex: 0.3;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  box-sizing: border-box;
+   margin-left: auto;
+}
+
+.search-container button {
+  margin-left: 10px;
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-container button:hover {
+  background-color: #0056b3;
+}
+.footer{
+    border: 2px solid #ffffff; 
+    padding-top: 15px; 
+    background-color: #f8f8f8;
+    text-align: center;
+}
+
+
 </style>

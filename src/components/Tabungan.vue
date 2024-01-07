@@ -1,65 +1,46 @@
 <template>
   <div class="container">
-    <h2>Data Tabungan</h2>
-    <form @submit.prevent="simpan()">
-      <!-- Form Input Tabungan -->
-      <div class="mb-3 form-group">
-        <label>Nasabah:</label>
-        <select v-model="tabungan.nasabah_id" class="form-control" required>
-          <option v-for="nasabah in allNasabah" :key="nasabah.id" :value="nasabah.id">{{ nasabah.nama }}</option>
-        </select>
-      </div>
-      <div class="mb-3 form-group">
-        <label>Jenis Transaksi:</label>
-        <select v-model="tabungan.jenistransaksi_id" class="form-control" required>
-          <option v-for="jenis in jenistransaksis" :key="jenis.id" :value="jenis.id">{{ jenis.jenistransaksi }}</option>
-        </select>
-      </div>
-      <div class="mb-3 form-group">
-        <label>Nominal:</label>
-        <input type="text" class="form-control" v-model="tabungan.nominal" required>
-      </div>
-      <div class="mb-3 form-group">
-        <label>Keterangan:</label>
-        <input type="text" class="form-control" v-model="tabungan.keterangan">
-      </div>
-      <div class="mb-3 form-group">
-        <label>User:</label>
-        <!-- Menampilkan nama pengguna yang sudah login -->
-        <input type="text" class="form-control" v-model="loggedInUser" disabled>
-      </div>
+    <div class="blok-judul">
+    <h2 class="Judul">Data Tabungan</h2>
+    </div>
 
-      <div class="btn-group">
-        <button class="btn btn-primary" type="submit">Simpan</button>
-        <button class="btn btn-warning" type="button" @click="clear()">Clear</button>
-      </div>
-    </form>
+    <hr>
+    <div class="blok">
+    <p>Pada bagian ini merupakan Data Khusus Nasabah yang dimana berisikan beberapa menu berupa : </p>
 
-    <h2>Data Tabungan</h2>
+    <ul>Tambah Data :
+    <li>Menambahkan informasi tabungan baru ke dalam sistem.</li>
+    </ul>
+     <ul>Edit :
+    <li>Memperbarui informasi tabungan yang telah terdaftar.</li>
+    </ul>
+      <ul>Hapus :
+    <li>Menghapus data tabungan yang tidak aktif atau tidak sesuai dengan kebijakan koperasi.</li>
+    </ul>
+    </div>
+    <!-- Add a search input -->
+    <div class="mb-3 form-group">
+      <label for="search">Cari Nama :</label>
+      <input type="text" class="form-control" v-model="search" id="search" />
+    </div>
+    <router-link to="/tambahtabungan" class="btn btn-success">Tambah Data</router-link>
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>ID</th>
+          <th>No</th>
           <th>Nasabah</th>
-          <th>Jenis Transaksi</th>
-          <th>Nominal</th>
-          <th>Keterangan</th>
-          <th>User</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(tabungan, index) in allTabungan" :key="tabungan.id">
+        <tr v-for="(tabungan, index) in filteredTabungan" :key="tabungan.id">
           <td>{{ tabungan.id }}</td>
-          <td>{{ tabungan.nasabah.nama }}</td>
-          <td>{{ tabungan.jenistransaksi.jenistransaksi }}</td>
-          <td>{{ tabungan.nominal }}</td>
-          <td>{{ tabungan.keterangan }}</td>
-          <td>{{ tabungan.user.name }}</td>
+          <td>{{ tabungan.nasabah && tabungan.nasabah.nama }}</td>
           <td>
             <div class="btn-group">
-              <button type="button" class="btn btn-warning" @click="edit(tabungan)">Edit</button>
+              <router-link :to="{ name: 'EditTabungan', params: { id: tabungan.id } }" class="btn btn-warning">Edit</router-link>
               <button type="button" class="btn btn-danger" @click="remove(tabungan)">Delete</button>
+              <router-link :to="{ name: 'HistoryTabungan', params: { nasabahNama: tabungan.nasabah && tabungan.nasabah.nama } }" class="btn btn-info">History</router-link>
             </div>
           </td>
         </tr>
@@ -82,13 +63,21 @@ export default {
         jenistransaksi_id: '',
         nominal: '',
         keterangan: '',
-        user_id: '', // Ini tidak perlu karena kita akan mengambil user_id dari data login
+        user_id: '',
       },
       allNasabah: [],
       jenistransaksis: [],
       loggedInUser: '',
       token: '',
+      search: '',
     };
+  },
+  computed: {
+    filteredTabungan() {
+      return this.allTabungan.filter(tabungan =>
+        tabungan.nasabah && tabungan.nasabah.nama.toLowerCase().includes(this.search.toLowerCase())
+      );
+    },
   },
   created() {
     this.loadAllTabungan();
@@ -126,7 +115,6 @@ export default {
       });
     },
     loadLoggedInUser() {
-      // Mengambil nama pengguna dari localStorage
       const name = localStorage.getItem('name');
       this.loggedInUser = name ? name : 'name';
     },
@@ -134,11 +122,8 @@ export default {
       this.token = localStorage.getItem('token');
     },
     simpan() {
-      // Menambahkan user_id ke objek tabungan dari data login
       const user_id = localStorage.getItem('user_id');
       this.tabungan.user_id = user_id;
-      console.log(this.tabungan);
-      console.log(user_id);
       if (this.tabungan.id === '') {
         axios.post('http://127.0.0.1:8000/api/tabungan', this.tabungan, {
           headers: {
@@ -190,8 +175,127 @@ export default {
 </script>
 
 <style scoped>
-.container {
+  .container {
     max-width: 10000px;
     margin: 20px auto;
   }
+
+  h2 {
+    color: #000000;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  form {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .form-group {
+    margin-bottom: 15px;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  input,
+  select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  .btn-group {
+    margin-top: 15px;
+  }
+
+  .btn {
+    margin-right: 10px;
+  }
+
+  .table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    border: 1px solid #dee2e6;
+    padding: 8px;
+    text-align: left;
+  }
+
+  th {
+    background-color:#000000;
+    color: white;
+  }
+
+  .btn-warning,
+  .btn-danger {
+    color: #fff;
+  }
+
+  .btn-warning:hover,
+  .btn-danger:hover {
+    color: #fff;
+  }
+
+.blok{
+    /* border: 2px solid #333;  */
+    padding: 10px; 
+    border-radius: 8px; 
+    background-color: #f8f8f8;
+}
+.blok-judul{
+    border: 2px solid #333; 
+    padding-top: 15px; 
+    border-radius: 8px; 
+    background-color: #f8f8f8;
+
+}
+
+.search-container {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.search-container input {
+  flex: 0.3;
+  padding: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  box-sizing: border-box;
+   margin-left: auto;
+}
+
+.search-container button {
+  margin-left: 10px;
+  padding: 8px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-container button:hover {
+  background-color: #0056b3;
+}
+.footer{
+    border: 2px solid #ffffff; 
+    padding-top: 15px; 
+    background-color: #f8f8f8;
+    text-align: center;
+}
+
+
 </style>
