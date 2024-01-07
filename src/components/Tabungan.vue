@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     loadAllTabungan() {
-      axios.get('http://127.0.0.1:8000/api/tabungan', {
+      axios.get('https://api-group1-prognet.manpits.xyz/api/tabungan', {
         headers: {
           Authorization: `Bearer ${this.token}`,
         },
@@ -97,7 +97,7 @@ export default {
       });
     },
     loadAllNasabah() {
-      axios.get('http://127.0.0.1:8000/api/nasabah', {
+      axios.get('https://api-group1-prognet.manpits.xyz/api/nasabah', {
         headers: {
           Authorization: `Bearer ${this.token}`,
         },
@@ -106,7 +106,7 @@ export default {
       });
     },
     loadJenisTransaksi() {
-      axios.get('http://127.0.0.1:8000/api/jenistransaksi', {
+      axios.get('https://api-group1-prognet.manpits.xyz/api/jenistransaksi', {
         headers: {
           Authorization: `Bearer ${this.token}`,
         },
@@ -125,7 +125,7 @@ export default {
       const user_id = localStorage.getItem('user_id');
       this.tabungan.user_id = user_id;
       if (this.tabungan.id === '') {
-        axios.post('http://127.0.0.1:8000/api/tabungan', this.tabungan, {
+        axios.post('https://api-group1-prognet.manpits.xyz/api/tabungan', this.tabungan, {
           headers: {
             Authorization: `Bearer ${this.token}`,
           },
@@ -134,7 +134,7 @@ export default {
           this.clear();
         });
       } else {
-        axios.put(`http://127.0.0.1:8000/api/tabungan/${this.tabungan.id}`, this.tabungan, {
+        axios.put(`https://api-group1-prognet.manpits.xyz/api/tabungan/${this.tabungan.id}`, this.tabungan, {
           headers: {
             Authorization: `Bearer ${this.token}`,
           },
@@ -153,7 +153,7 @@ export default {
       this.tabungan.user_id = '';
     },
     edit(tabungan) {
-      axios.get(`http://127.0.0.1:8000/api/tabungan/${tabungan.id}`, {
+      axios.get(`https://api-group1-prognet.manpits.xyz/api/tabungan/${tabungan.id}`, {
         headers: {
           Authorization: `Bearer ${this.token}`,
         },
@@ -162,7 +162,7 @@ export default {
       });
     },
     remove(tabungan) {
-      axios.delete(`http://127.0.0.1:8000/api/tabungan/${tabungan.id}`, {
+      axios.delete(`https://api-group1-prognet.manpits.xyz/api/tabungan/${tabungan.id}`, {
         headers: {
           Authorization: `Bearer ${this.token}`,
         },
