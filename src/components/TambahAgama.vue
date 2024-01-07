@@ -37,33 +37,33 @@
     },
     methods: {
       loadAllAgamas() {
-        var url = 'http://127.0.0.1:8000/api/agama';
+        var url = 'https://api-group1-prognet.manpits.xyz/api/agama';
         axios.get(url).then(({ data }) => {
           this.allAgamas = data;
         });
       },
       removeAgama(agama) {
-        var url = `http://127.0.0.1:8000/api/agama/${agama.id}`;
+        var url = `https://api-group1-prognet.manpits.xyz/api/agama/${agama.id}`;
         axios.delete(url).then(() => {
           this.loadAllAgamas();
         });
       },
       editAgama(agama) {
-        var url = `http://127.0.0.1:8000/api/agama/${agama.id}`;
+        var url = `https://api-group1-prognet.manpits.xyz/api/agama/${agama.id}`;
         axios.get(url).then(({ data }) => {
           this.agama = data;
         });
       },
       simpanAgama() {
         if (this.agama.id === '') {
-          var url = 'http://127.0.0.1:8000/api/agama';
+          var url = 'https://api-group1-prognet.manpits.xyz/api/agama';
           axios.post(url, this.agama).then(() => {
             this.loadAllAgamas();
             this.clearAgama();
             this.pesanSimpan = 'Data berhasil disimpan!';
           });
         } else {
-          var url = `http://127.0.0.1:8000/api/agama/${this.agama.id}`;
+          var url = `https://api-group1-prognet.manpits.xyz/api/agama/${this.agama.id}`;
           axios.put(url, this.agama).then(() => {
             this.loadAllAgamas();
             this.clearAgama();
