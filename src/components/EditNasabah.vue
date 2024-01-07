@@ -64,19 +64,19 @@ export default {
   },
   methods: {
     loadNasabah(id) {
-      axios.get(`http://127.0.0.1:8000/api/nasabah/${id}`).then(({ data }) => {
+      axios.get(`https://api-group1-prognet.manpits.xyz/api/nasabah/${id}`).then(({ data }) => {
         this.nasabah = data;
       });
     },
     loadAgamas() {
-      axios.get('http://127.0.0.1:8000/api/agama').then(({ data }) => {
+      axios.get('https://api-group1-prognet.manpits.xyz/api/agama').then(({ data }) => {
         this.agamas = data;
       });
     },
     simpan() {
       const url = this.nasabah.id
-        ? `http://127.0.0.1:8000/api/nasabah/${this.nasabah.id}`
-        : 'http://127.0.0.1:8000/api/nasabah';
+        ? `https://api-group1-prognet.manpits.xyz/api/nasabah/${this.nasabah.id}`
+        : 'https://api-group1-prognet.manpits.xyz/api/nasabah';
 
       const method = this.nasabah.id ? 'put' : 'post';
 
