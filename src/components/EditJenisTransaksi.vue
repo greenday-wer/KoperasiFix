@@ -47,15 +47,15 @@ export default {
   },
   methods: {
     loadJenisTransaksi(id) {
-      const url = `http://127.0.0.1:8000/api/jenistransaksi/${id}`;
+      const url = `https://api-group1-prognet.manpits.xyz/api/jenistransaksi/${id}`;
       axios.get(url).then(({ data }) => {
         this.jenisTransaksi = data;
       });
     },
     simpanJenisTransaksi() {
       const url = this.jenisTransaksi.id
-        ? `http://127.0.0.1:8000/api/jenistransaksi/${this.jenisTransaksi.id}`
-        : 'http://127.0.0.1:8000/api/jenistransaksi';
+        ? `https://api-group1-prognet.manpits.xyz/api/jenistransaksi/${this.jenisTransaksi.id}`
+        : 'https://api-group1-prognet.manpits.xyz/api/jenistransaksi';
 
       const method = this.jenisTransaksi.id ? 'put' : 'post';
 
